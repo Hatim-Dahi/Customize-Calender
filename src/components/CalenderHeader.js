@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
-function CalenderHeader() {
+function CalenderHeader({ setMonthIndex }) {
   const monthNames = [
     "January",
     "February",
@@ -21,13 +21,17 @@ function CalenderHeader() {
     if (currentIndex === 0) {
       return;
     }
-    setCurrentIndex((prev) => prev - 1);
+    const newIndex = currentIndex - 1;
+    setCurrentIndex(newIndex);
+    setMonthIndex(newIndex);
   };
   const handleNext = () => {
     if (currentIndex === 11) {
       return;
     }
-    setCurrentIndex((prev) => prev + 1);
+    const newIndex = currentIndex + 1;
+    setCurrentIndex(newIndex);
+    setMonthIndex(newIndex);
   };
   const handleDropdown = () => {};
   return (
