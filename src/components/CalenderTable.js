@@ -1,5 +1,6 @@
 import React, { memo } from "react";
 function getDaysInMonth(year, month) {
+  console.log("from function", year, month);
   const startDate = new Date(year, month, 1);
   const endDate = new Date(year, month + 1, 0);
   const daysInMonth = [];
@@ -18,13 +19,11 @@ function getDaysInMonth(year, month) {
 
 function CalenderTable({ year, month }) {
   const { daysInMonth, firstDayIndex } = getDaysInMonth(year, month);
-  console.log(daysInMonth, firstDayIndex);
-  const numRows = Math.ceil(daysInMonth.length / 7);
 
   return (
     <div className="w-full h-full px-2">
-      <table className="w-full bg-slate-300 ">
-        <thead className="text-sm">
+      <table className="w-full">
+        <thead className="text-sm border-b-8 border-white">
           <tr>
             <th>Sun</th>
             <th>Mon</th>
@@ -35,27 +34,18 @@ function CalenderTable({ year, month }) {
             <th>Sat</th>
           </tr>
         </thead>
-        <tbody className="text-sm">
-          {Array.from({ length: numRows }).map((_, rowIndex) => (
+        <tbody className="text-sm ">
+          {Array.from({ length: 7 }).map((_, rowIndex) => (
             <tr key={rowIndex} className="text-center cursor-pointer">
               {Array.from({ length: 7 }).map((_, colIndex) => {
                 const dayIndex = rowIndex * 7 + colIndex;
-                const date = daysInMonth[dayIndex];
+                const date = daysInMonth[dayIndex - firstDayIndex];
                 const isCurrentMonth = date && date.getMonth() === month;
-                console.log(
-                  rowIndex,
-                  "* ",
-                  7,
-                  "+ ",
-                  colIndex,
-                  "= ",
-                  dayIndex,
-                  ":",
-                  date,
-                  isCurrentMonth
-                );
                 return (
-                  <td key={colIndex}>
+                  <td
+                    key={colIndex}
+                    className="p-2 hover:bg-[#9a59b5] hover:text-white hover:rounded-md"
+                  >
                     {isCurrentMonth &&
                       dayIndex >= firstDayIndex &&
                       dayIndex - firstDayIndex + 1}
